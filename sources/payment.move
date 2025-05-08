@@ -47,6 +47,7 @@ public struct PaymentReceiptEvent has copy, drop {
     productId: address,
     ref_id: String,
     amount: u64,
+    paidon: u64,
 }
 
 public struct IndividualActiveSubscriptionRegistry has key, store {
@@ -148,6 +149,7 @@ public fun makePayment(
         productId: product.getProductId(),
         ref_id: ref_id,
         amount: amount,
+        paidon: clock.timestamp_ms(),
     };
     event::emit(paymentReceiptEvent);
 
@@ -195,6 +197,7 @@ public fun makePaymentFromIntent(
         productId: product.getProductId(),
         ref_id: paymentIntent.ref_id,
         amount: paymentIntent.amount,
+        paidon: clock.timestamp_ms(),
     };
     event::emit(paymentReceiptEvent);
 
